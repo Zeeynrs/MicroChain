@@ -22,4 +22,4 @@ Rute: `/` landing, `/dashboard` `/network` `/simulator` `/comparison` `/data` ru
 
 ## Atribusi dan lisensi
 
-Fork dari [Zeeynrs/Pasok-Siaga](https://github.com/Zeeynrs/Pasok-Siaga): tampilannya disalin dan diadaptasi, sedangkan aplikasinya diganti dengan MicroChain. Dilisensikan di bawah [GNU GPL v3.0](LICENSE). Rinciannya di [NOTICE.md](NOTICE.md).
+Dilisensikan di bawah [GNU GPL v3.0](LICENSE). Tampilannya berasal dari versi awal repositori ini; rinciannya di [NOTICE.md](NOTICE.md).

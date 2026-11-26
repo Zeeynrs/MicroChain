@@ -11,8 +11,8 @@ status: approved
 Alat simulasi ketahanan rantai pasok untuk UMKM makanan (demo: **Dapur Sari**), dibangun dengan Next.js App Router, TypeScript, Tailwind CSS, React Flow, solver MILP server-side (`highs` WASM), dan Supabase (Auth email + kata sandi, Postgres RLS).
 
 ## Last Handoff / Current State
-- **Status (2026-11-26):** dipublikasikan ke `main` pada fork GitHub `ICR-1/Micro-Chain` dari [Zeeynrs/Pasok-Siaga](https://github.com/Zeeynrs/Pasok-Siaga), berlisensi GPL-3.0. Riwayat kedua proyek digabung tanpa force-push.
-- **Sudah ada:** tampilan mengikuti Pasok-Siaga, login kata sandi dan Lupa kata sandi, workspace kosong untuk pengguna baru, notifikasi CRUD, navigasi bawah di ponsel, onboarding dan coach marks.
+- **Status (2026-11-26):** MicroChain sudah di-merge ke `main` repo bersama [Zeeynrs/MicroChain](https://github.com/Zeeynrs/MicroChain) (PR #3; dulu bernama Pasok-Siaga), berlisensi GPL-3.0. Remote lokal: `origin` repo bersama, `fork` milik `ICR-1`.
+- **Sudah ada:** login kata sandi dan Lupa kata sandi, workspace kosong untuk pengguna baru, notifikasi CRUD, navigasi bawah di ponsel, onboarding dan coach marks.
 - **Database:** migrasi di `supabase/` sudah diterapkan dan diverifikasi (RPC, RLS, reset, isolasi pengguna).
 - **Keputusan kunci:** solver `highs` WASM terverifikasi di `next start`; signature basi SHA-256 sinkron (klien = server); `proxy.ts` (Next 16); angka referensi Dapur Sari cocok PRD (Rp 450.000 / 210.000 / 342.000, pulih 55% dan 76%). Detail: [[docs/TASKS]].
 - **Langkah berikutnya:** daftarkan `<origin>/auth/callback` di Auth > URL Configuration, uji email Lupa kata sandi, lalu deploy Vercel (set `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY`).
