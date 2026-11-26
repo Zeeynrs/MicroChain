@@ -113,7 +113,7 @@ async function renderPage(mode: "demo" | "workspace", initial: PageId = "dashboa
 }
 const go = (id: PageId) => userEvent.click(screen.getByRole("button", { name: `ke-${id}` }));
 
-describe("Shell (sidebar, bar) mirrors the Pasok-Siaga layout", () => {
+describe("Shell (sidebar, bar) layout", () => {
   it("shows brand, business card, five nav links with demo hrefs, and the demo mode label", async () => {
     await renderPage("demo");
     const nav = screen.getByRole("navigation", { name: "Navigasi ruang kerja" });

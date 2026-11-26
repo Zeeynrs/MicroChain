@@ -33,7 +33,7 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
-describe("HomePage (landing Pasok-Siaga look)", () => {
+describe("HomePage (landing)", () => {
   it("links the main CTA to the demo workspace and offers login", () => {
     render(<HomePage />);
     expect(screen.getByRole("link", { name: /Coba Demo Dapur Sari/ })).toHaveAttribute("href", "/dashboard");

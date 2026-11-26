@@ -17,7 +17,7 @@ interface NumberInputProps {
 /**
  * Isian bilangan bulat yang aman diketik: nilai tidak valid (kosong, huruf, minus, di luar rentang)
  * tidak pernah diteruskan ke state. Pesan galat tampil dan nilai sah terakhir dipulihkan saat blur.
- * Tampilannya memakai gaya `.field` dan `.input` dari desain Pasok-Siaga.
+ * Tampilannya memakai gaya `.field` dan `.input` di `app/globals.css`.
  */
 export function NumberInput({ label, value, min = 0, max = 1_000_000, onCommit, hint, hideLabel }: NumberInputProps) {
   const id = useId();

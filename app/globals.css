@@ -466,7 +466,7 @@ select { appearance: auto; padding-right: 22px; }
 .login-forgot { justify-self: start; padding: 0; border: 0; background: none; font: inherit; font-size: 13px; }
 .login-forgot:disabled { opacity: .6; cursor: not-allowed; }
 
-/* ---- Notifikasi (sonner) mengikuti palet Pasok-Siaga ---- */
+/* ---- Notifikasi (sonner) mengikuti palet aplikasi ---- */
 [data-sonner-toaster] .mc-toast { align-items: flex-start; gap: 10px; padding: 13px 14px; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); color: var(--ink); box-shadow: 0 8px 24px #173f3224; font-family: var(--font-sans); font-size: 14px; }
 [data-sonner-toaster] .mc-toast .mc-toast-title { font-weight: 750; line-height: 1.4; }
 [data-sonner-toaster] .mc-toast-success { border-color: #bcd8c7; background: #f1f8f2; }
