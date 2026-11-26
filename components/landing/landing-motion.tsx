@@ -136,18 +136,18 @@ export function LandingMotion({ children }: { children: ReactNode }) {
           });
         });
 
-        // 3. Pain point visual bento cards cascade
+        // 3. Pain point interactive list cascade
         const painRows = root.querySelectorAll<HTMLElement>("[data-gsap='pain-row']");
         if (painRows.length > 0) {
           gsap.from(painRows, {
-            y: isDesktop ? 24 : 16,
+            y: isDesktop ? 20 : 14,
             opacity: 0,
-            duration: 0.62,
-            stagger: 0.1,
+            duration: 0.56,
+            stagger: 0.085,
             ease: "power3.out",
             clearProps: "transform,opacity",
             scrollTrigger: {
-              trigger: ".pain-grid",
+              trigger: ".pain-list",
               start: triggerStart,
               once: true,
               fastScrollEnd: true,
