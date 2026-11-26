@@ -156,20 +156,22 @@ select { appearance: auto; padding-right: 22px; }
 .section-header-split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: end; gap: 24px 48px; margin-bottom: clamp(28px, 3.6vw, 44px); }
 .section-header-split .section-lead { margin-top: 0; }
 
-/* Pain Points Editorial Ledger */
-.pain-layout { display: grid; grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr); align-items: start; gap: clamp(28px, 4.5vw, 64px); }
-.pain-sticky { position: sticky; top: 100px; }
-.pain-callout { display: flex; align-items: flex-start; gap: 10px; margin-top: 22px; padding: 14px 16px; border: 1px solid #d3e2d3; border-radius: 12px; background: #ecf4eb; color: #264d3c; font-size: 13.5px; font-weight: 700; line-height: 1.55; }
+/* Pain Points Editorial Photo Grid */
+.pain-header { align-items: start; }
+.pain-header-aside { display: grid; gap: 14px; }
+.pain-callout { display: flex; align-items: flex-start; gap: 10px; padding: 12px 15px; border: 1px solid #d3e2d3; border-radius: 12px; background: #ecf4eb; color: #264d3c; font-size: 13px; font-weight: 700; line-height: 1.52; }
 .pain-callout svg { color: var(--green); flex: none; margin-top: 2px; }
-.pain-ledger { border-top: 1px solid #cfdcd0; }
-.pain-row { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 18px; padding: 24px 14px; border-bottom: 1px solid #d6e0d6; transition: background-color .18s; }
-.pain-row:hover { background: #f2f6ef; }
-.pain-row-meta { display: flex; align-items: center; gap: 10px; padding-top: 2px; }
-.pain-row-num { color: var(--accent); font-size: 13px; font-weight: 850; font-variant-numeric: tabular-nums; }
-.pain-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 9px; background: #e9f2e8; color: var(--green); flex: none; }
-.pain-risk-label { display: inline-block; margin-bottom: 5px; color: var(--warning); font-size: 12px; font-weight: 800; }
-.pain-row-body h3 { margin: 0 0 6px; color: var(--ink); font-size: 17px; font-weight: 850; line-height: 1.32; letter-spacing: -.02em; }
-.pain-row-body p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.62; }
+
+.pain-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.pain-visual-card { display: flex; flex-direction: column; border: 1px solid #d1dfd2; border-radius: 18px; background: var(--surface); overflow: hidden; box-shadow: 0 12px 28px #173f320a; transition: border-color .2s, box-shadow .2s; }
+.pain-visual-card:hover { border-color: #aac3b2; box-shadow: 0 16px 36px #173f3214; }
+.pain-photo-media { position: relative; margin: 0; overflow: hidden; border-bottom: 1px solid var(--rule); background: #e8efe7; aspect-ratio: 4 / 3; }
+.pain-photo-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .42s ease; }
+.pain-visual-card:hover .pain-photo-img { transform: scale(1.03); }
+.media-pill.tone-bad span { background: var(--bad); }
+.pain-card-body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
+.pain-card-body h3 { margin: 10px 0 8px; color: var(--ink); font-size: 18px; font-weight: 850; line-height: 1.3; letter-spacing: -.022em; }
+.pain-card-body p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.62; }
 
 /* Interactive Dapur Sari App-Frame Preview */
 .preview-window { border: 1px solid #c9d8ca; border-radius: 20px; background: var(--surface); box-shadow: 0 24px 58px #173f3216; overflow: hidden; }
@@ -600,8 +602,7 @@ select { appearance: auto; padding-right: 22px; }
   .hero-floating-card { max-width: 440px; }
   .carousel-slide { grid-template-columns: minmax(0, 1fr); }
   .carousel-media { min-height: 280px; aspect-ratio: 16 / 10; }
-  .pain-sticky { position: static; }
-  .section-header-split, .pain-layout, .faq-layout, .preview-grid, .spotlight-row, .secondary-module-grid, .landing-steps-dark { grid-template-columns: minmax(0, 1fr); }
+  .section-header-split, .pain-grid, .faq-layout, .preview-grid, .spotlight-row, .secondary-module-grid, .landing-steps-dark { grid-template-columns: minmax(0, 1fr); }
   .spotlight-row.is-reversed .module-media { order: 0; }
   .audience-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .versus-head { display: none; }
@@ -657,7 +658,7 @@ select { appearance: auto; padding-right: 22px; }
   .carousel-pill-tab { padding: 7px 10px; justify-content: flex-start; }
   .carousel-controls { width: 100%; justify-content: flex-end; }
   .carousel-media { min-height: 220px; }
-  .pain-row { grid-template-columns: minmax(0, 1fr); gap: 10px; padding-inline: 6px; }
+  .pain-card-body { padding: 16px 16px 18px; }
   .preview-tabs, .preview-kpi-strip, .step-list-dark, .audience-grid { grid-template-columns: minmax(0, 1fr); }
   .preview-flow-bar { flex-direction: column; align-items: stretch; }
   .flow-arrow { transform: rotate(90deg); align-self: center; }

@@ -1,19 +1,15 @@
 import {
-  AlertTriangle,
   ArrowDown,
   BarChart3,
   Check,
   ChevronDown,
   ChevronRight,
-  Clock,
-  CookingPot,
   Database,
   FlaskConical,
   GitFork,
   PackageOpen,
   ShieldCheck,
   Store,
-  Truck,
   UtensilsCrossed,
   X,
 } from "lucide-react";
@@ -28,29 +24,37 @@ import { Button } from "@/components/ui/button";
 
 const painPoints = [
   {
-    num: "01",
-    icon: AlertTriangle,
+    image: "/landing/pain-1-sumber-tunggal.webp",
+    imageAlt: "Tumpukan karung tepung terigu 25 kg yang dibungkus dari satu pemasok utama di gudang dapur roti",
+    caption: "25 kg tepung · 1 pemasok utama",
+    tone: "bad" as const,
     risk: "Risiko sumber tunggal",
     question: "Bahan mana yang cuma bergantung pada satu pemasok?",
     answer: "Banyak dapur UMKM baru sadar saat truk terlambat bahwa satu bahan utama menghentikan hampir semua menu unggulan.",
   },
   {
-    num: "02",
-    icon: CookingPot,
+    image: "/landing/pain-2-prioritas.webp",
+    imageAlt: "Pemilik dapur roti menata loyang kue kering dan roti di samping sekarung tepung di meja kayu",
+    caption: "Sisa 8 kg · Kue kering vs Roti",
+    tone: "warning" as const,
     risk: "Prioritas produksi meleset",
     question: "Dengan sisa stok di rak, produk mana yang paling untung dibuat dulu?",
     answer: "Saat tepung terbatas, membagi bahan secara kira-kira membuat margin harian anjlok. Prioritas produksi perlu dihitung dari kontribusi per gram.",
   },
   {
-    num: "03",
-    icon: Truck,
+    image: "/landing/pain-3-premi.webp",
+    imageAlt: "Pemilik usaha roti menghitung nota pembelian dan kalkulator di samping tumpukan paket tepung cadangan 1 kg serta roti segar",
+    caption: "12 pak cadangan · Premi Rp 12 rb",
+    tone: "good" as const,
     risk: "Premi menggerus margin",
     question: "Apakah beli dari pemasok cadangan yang lebih mahal tetap untung?",
     answer: "Pemasok alternatif sering punya harga lebih tinggi dan batas paket. MicroChain menghitung berapa paket yang layak dibeli setelah biaya premi.",
   },
   {
-    num: "04",
-    icon: Clock,
+    image: "/landing/pain-4-batas-waktu.webp",
+    imageAlt: "Buku kalender perencanaan produksi dan jadwal pengiriman bahan baku terbuka di atas meja kayu dapur",
+    caption: "Lead time H+1 vs batas H+2",
+    tone: "warning" as const,
     risk: "Kiriman lewat batas waktu",
     question: "Apakah kiriman cadangan sempat datang sebelum batas produksi?",
     answer: "Lead time 1 hari vs 3 hari mengubah kelayakan pasokan. Sistem otomatis menyaring kiriman yang melewati tanggal batas perencanaan.",
@@ -311,34 +315,47 @@ export default function LandingPage() {
         </section>
 
         <section id="masalah" className="landing-section landing-width" aria-labelledby="masalah-title">
-          <div className="pain-layout">
-            <div className="section-intro pain-sticky" data-gsap="reveal-up">
+          <div className="section-header-split pain-header" data-gsap="reveal-up">
+            <div>
               <p className="section-kicker">Pertanyaan untuk pemilik usaha makanan</p>
               <h2 id="masalah-title">Keputusan dapur saat pasokan macet jangan lagi pakai kira-kira.</h2>
+            </div>
+            <div className="pain-header-aside">
               <p className="section-lead">
-                Bisa membuat makanan enak saja tidak cukup ketika satu bahan utama terlambat datang. Tanpa angka yang jelas, dapur berisiko salah prioritas menu atau rugi karena membeli bahan cadangan terlalu mahal.
+                Bisa membuat makanan enak saja tidak cukup ketika satu bahan utama terlambat datang. Tanpa angka yang jelas, dapur berisiko salah prioritas menu atau rugi membeli bahan cadangan terlalu mahal.
               </p>
               <div className="pain-callout">
-                <ShieldCheck size={18} aria-hidden="true" />
-                <span>MicroChain mengubah stok, resep, dan jadwal kirim menjadi rencana produksi yang terukur dalam hitungan detik.</span>
+                <ShieldCheck size={17} aria-hidden="true" />
+                <span>MicroChain mengubah stok, resep, dan jadwal kirim menjadi rencana produksi terukur dalam hitungan detik.</span>
               </div>
             </div>
+          </div>
 
-            <div className="pain-ledger">
-              {painPoints.map(({ num, icon: Icon, risk, question, answer }) => (
-                <article key={question} className="pain-row" data-gsap="pain-row">
-                  <div className="pain-row-meta">
-                    <span className="pain-row-num">{num}</span>
-                    <span className="pain-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.85} /></span>
-                  </div>
-                  <div className="pain-row-body">
-                    <span className="pain-risk-label">{risk}</span>
-                    <h3>{question}</h3>
-                    <p>{answer}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
+          <div className="pain-grid">
+            {painPoints.map(({ image, imageAlt, caption, tone, risk, question, answer }) => (
+              <article key={question} className="pain-visual-card" data-gsap="pain-row">
+                <figure className="pain-photo-media">
+                  <Image
+                    src={image}
+                    alt={imageAlt}
+                    width={1200}
+                    height={900}
+                    unoptimized
+                    loading="eager"
+                    className="pain-photo-img"
+                  />
+                  <figcaption className={`media-pill tone-${tone}`}>
+                    <span aria-hidden="true" />
+                    {caption}
+                  </figcaption>
+                </figure>
+                <div className="pain-card-body">
+                  <span className={`tag tag-${tone}`}>{risk}</span>
+                  <h3>{question}</h3>
+                  <p>{answer}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
