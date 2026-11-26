@@ -20,6 +20,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Brand } from "@/components/brand";
+import { HeroVideoBackground } from "@/components/landing/hero-video-bg";
+import { LandingCarousel } from "@/components/landing/landing-carousel";
 import { LandingScenarioPreview } from "@/components/landing/landing-interactive";
 import { LandingMotion } from "@/components/landing/landing-motion";
 import { Button } from "@/components/ui/button";
@@ -225,46 +227,39 @@ export default function LandingPage() {
       </header>
 
       <main id="isi">
-        <section className="landing-hero landing-width" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <div className="hero-context" data-gsap="hero-item"><span aria-hidden="true" /> Perencanaan pasokan UMKM makanan</div>
-            <h1 id="hero-title" data-gsap="hero-item">
-              Saat pasokan<br className="hero-break" /> terganggu,<br className="hero-break" />{" "}
-              <em>produksi tetap<br className="hero-break" /> terencana.</em>
-            </h1>
-            <p data-gsap="hero-item">
-              Petakan pemasok, uji dampak gangguan bahan baku, dan hitung rencana produksi serta pembelian cadangan paling menguntungkan berdasarkan stok dan biayamu sendiri.
-            </p>
-            <div className="hero-actions" data-gsap="hero-item">
-              <Button asChild>
-                <Link href="/dashboard">
-                  Coba Demo Dapur Sari <ChevronRight size={20} aria-hidden="true" />
-                </Link>
-              </Button>
-              <a href="#simulasi-dapur-sari" className="hero-secondary-link">
-                Lihat simulasi <ArrowDown size={15} aria-hidden="true" />
-              </a>
+        <section className="landing-video-hero" aria-labelledby="hero-title">
+          <HeroVideoBackground />
+          <div className="landing-hero-inner landing-width">
+            <div className="hero-copy hero-copy-light">
+              <div className="hero-context hero-context-light" data-gsap="hero-item">
+                <span aria-hidden="true" /> Perencanaan pasokan UMKM makanan
+              </div>
+              <h1 id="hero-title" data-gsap="hero-item">
+                Saat pasokan<br className="hero-break" /> terganggu,<br className="hero-break" />{" "}
+                <em>produksi tetap<br className="hero-break" /> terencana.</em>
+              </h1>
+              <p data-gsap="hero-item">
+                Petakan pemasok, uji dampak gangguan bahan baku, dan hitung rencana produksi serta pembelian cadangan paling menguntungkan berdasarkan stok dan biayamu sendiri.
+              </p>
+              <div className="hero-actions" data-gsap="hero-item">
+                <Button asChild variant="inverse">
+                  <Link href="/dashboard">
+                    Coba Demo Dapur Sari <ChevronRight size={20} aria-hidden="true" />
+                  </Link>
+                </Button>
+                <a href="#galeri-usaha" className="hero-secondary-link hero-secondary-light">
+                  Jelajahi contoh UMKM <ArrowDown size={15} aria-hidden="true" />
+                </a>
+              </div>
+              <ul className="hero-checks hero-checks-light" aria-label="Keunggulan utama" data-gsap="hero-item">
+                <li><Check size={15} aria-hidden="true" /> Langsung dicoba tanpa login</li>
+                <li><Check size={15} aria-hidden="true" /> Optimasi deterministik (MILP)</li>
+                <li><Check size={15} aria-hidden="true" /> Simpan data usahamu sendiri</li>
+              </ul>
+              <small data-gsap="hero-item">Studi kasus fiktif Dapur Sari siap dicoba langsung di browser</small>
             </div>
-            <ul className="hero-checks" aria-label="Keunggulan utama" data-gsap="hero-item">
-              <li><Check size={15} aria-hidden="true" /> Langsung dicoba tanpa login</li>
-              <li><Check size={15} aria-hidden="true" /> Optimasi deterministik (MILP)</li>
-              <li><Check size={15} aria-hidden="true" /> Simpan data usahamu sendiri</li>
-            </ul>
-            <small data-gsap="hero-item">Studi kasus fiktif Dapur Sari siap dicoba langsung di browser</small>
-          </div>
 
-          <figure className="hero-figure" data-gsap="hero-media">
-            <Image
-              src="/dapur-sari.webp"
-              alt="Pembuat roti menata loyang roti di dapur produksi"
-              fill
-              unoptimized
-              sizes="(max-width: 840px) 100vw, 50vw"
-              preload
-              className="hero-photo"
-            />
-            <div className="hero-scrim" aria-hidden="true" />
-            <figcaption className="hero-ticket" data-gsap="hero-ticket">
+            <aside className="hero-floating-card" data-gsap="hero-ticket" aria-label="Ringkasan studi kasus Dapur Sari">
               <div className="hero-ticket-heading">
                 <span className="ticket-mark"><Store size={19} aria-hidden="true" /></span>
                 <span>
@@ -290,8 +285,29 @@ export default function LandingPage() {
                   <strong className="metric-good">Rp&nbsp;342&nbsp;rb</strong>
                 </div>
               </div>
-            </figcaption>
-          </figure>
+              <p className="hero-card-caption">
+                Saat Pemasok A gagal kirim 25 kg tepung, aktivasi 12 pak Pemasok B memulihkan Rp&nbsp;132.000 kontribusi bersih.
+              </p>
+            </aside>
+          </div>
+        </section>
+
+        <section id="galeri-usaha" className="landing-section landing-carousel-band" aria-labelledby="galeri-title">
+          <div className="landing-width">
+            <div className="section-header-split" data-gsap="reveal-up">
+              <div>
+                <p className="section-kicker">Penerapan lintas jenis UMKM kuliner</p>
+                <h2 id="galeri-title">Dari toko roti hingga kedai kopi, satu alat untuk mengamankan produksi harian.</h2>
+              </div>
+              <p className="section-lead">
+                Geser atau pilih jenis usaha di bawah untuk melihat bagaimana MicroChain membantu menghadapi gangguan pasokan bahan utama.
+              </p>
+            </div>
+
+            <div data-gsap="carousel">
+              <LandingCarousel />
+            </div>
+          </div>
         </section>
 
         <section id="masalah" className="landing-section landing-width" aria-labelledby="masalah-title">

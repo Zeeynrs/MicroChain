@@ -67,49 +67,18 @@ export function LandingMotion({ children }: { children: ReactNode }) {
         });
 
         heroTl.from(
-          "[data-gsap='hero-media']",
-          {
-            y: isDesktop ? 18 : 12,
-            opacity: 0,
-            duration: 0.75,
-            clearProps: "transform,opacity",
-          },
-          0.12,
-        );
-
-        heroTl.from(
           "[data-gsap='hero-ticket']",
           {
-            y: 18,
+            y: 22,
             opacity: 0,
-            duration: 0.6,
+            duration: 0.68,
             clearProps: "transform,opacity",
           },
-          0.32,
+          0.26,
         );
 
-        // Desktop-only subtle parallax scrub on hero & spotlight photographs
+        // Desktop-only subtle parallax scrub on spotlight photographs
         if (isDesktop) {
-          const heroPhoto = root.querySelector<HTMLElement>(".hero-photo");
-          if (heroPhoto) {
-            gsap.fromTo(
-              heroPhoto,
-              { scale: 1.08, yPercent: -4 },
-              {
-                scale: 1.08,
-                yPercent: 4,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: ".hero-figure",
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: 0.5,
-                  invalidateOnRefresh: true,
-                },
-              },
-            );
-          }
-
           root.querySelectorAll<HTMLElement>("[data-gsap='spotlight-media']").forEach((figure) => {
             const img = figure.querySelector<HTMLElement>(".module-image");
             if (!img) return;
@@ -129,6 +98,24 @@ export function LandingMotion({ children }: { children: ReactNode }) {
                 },
               },
             );
+          });
+        }
+
+        // Carousel reveal
+        const carouselEl = root.querySelector<HTMLElement>("[data-gsap='carousel']");
+        if (carouselEl) {
+          gsap.from(carouselEl, {
+            y: travel,
+            opacity: 0,
+            duration: 0.72,
+            ease: "power3.out",
+            clearProps: "transform,opacity",
+            scrollTrigger: {
+              trigger: carouselEl,
+              start: triggerStart,
+              once: true,
+              fastScrollEnd: true,
+            },
           });
         }
 

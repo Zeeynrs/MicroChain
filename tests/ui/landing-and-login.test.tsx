@@ -89,10 +89,31 @@ describe("HomePage (landing)", () => {
   it("wires GSAP responsive scroll choreography hooks and scroll progress indicator cleanly", () => {
     const { container, unmount } = render(<HomePage />);
     expect(container.querySelector("[data-gsap='scroll-progress']")).toBeInTheDocument();
+    expect(container.querySelector("[data-gsap='carousel']")).toBeInTheDocument();
     expect(container.querySelectorAll("[data-gsap='pain-row']")).toHaveLength(4);
     expect(container.querySelectorAll("[data-gsap='spotlight-row']")).toHaveLength(2);
     expect(container.querySelectorAll("[data-gsap='step-card']")).toHaveLength(3);
     unmount();
+  });
+
+  it("renders the animated hero video background with pause toggle and interactive 4-slide UMKM carousel", async () => {
+    const { container } = render(<HomePage />);
+    const source = container.querySelector("video source");
+    expect(source).toHaveAttribute("src", "/landing/hero-kitchen-bg.mp4");
+    const video = container.querySelector("video");
+    expect(video).toHaveAttribute("poster", "/landing/hero-kitchen-poster.webp");
+
+    const toggle = screen.getByRole("button", { name: /video latar/i });
+    await userEvent.click(toggle);
+
+    // Carousel navigation switches between Dapur Sari, Kedai Kopi Susu, Dimsum, and Martabak
+    expect(screen.getByText("01 / 04")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Slide berikutnya" }));
+    expect(screen.getByText("02 / 04")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /Martabak & Kue Tradisional/ }));
+    expect(screen.getByText("04 / 04")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Slide sebelumnya" }));
+    expect(screen.getByText("03 / 04")).toBeInTheDocument();
   });
 });
 
