@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CircleAlert, MailCheck } from "lucide-react";
+import { CircleAlert, Eye, EyeOff, MailCheck } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,6 +44,7 @@ export default function LoginForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sentMessage, setSentMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -139,6 +140,8 @@ export default function LoginForm() {
           type="email"
           autoComplete="email"
           inputMode="email"
+          spellCheck={false}
+          placeholder="nama@usaha.id…"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -147,16 +150,33 @@ export default function LoginForm() {
         />
       </div>
       <div className="field">
-        <label htmlFor="password">Kata sandi</label>
-        <Input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="password-label-row">
+          <label htmlFor="password">Kata sandi</label>
+          <button type="button" className="login-forgot text-link" disabled={busy} onClick={forgotPassword}>
+            Lupa kata sandi?
+          </button>
+        </div>
+        <div className="password-input-wrap">
+          <Input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            placeholder="Minimal 8 karakter…"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={() => setShowPassword((prev) => !prev)}
+            aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+            aria-pressed={showPassword}
+          >
+            {showPassword ? <EyeOff size={17} aria-hidden="true" /> : <Eye size={17} aria-hidden="true" />}
+          </button>
+        </div>
         <small className="field-hint">Untuk akun baru, gunakan minimal {MIN_PASSWORD} karakter.</small>
       </div>
       {message && (
@@ -169,9 +189,6 @@ export default function LoginForm() {
         <Button type="submit" disabled={busy}>{busy ? "Memproses…" : "Masuk"}</Button>
         <Button type="button" variant="outline" disabled={busy} onClick={signUp}>Daftar Akun Baru</Button>
       </div>
-      <button type="button" className="login-forgot text-link" disabled={busy} onClick={forgotPassword}>
-        Lupa kata sandi?
-      </button>
     </form>
   );
 }

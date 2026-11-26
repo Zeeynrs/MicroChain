@@ -20,6 +20,7 @@
     "@xyflow/react": "12.12.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "gsap": "^3.15.1",
     "highs": "^1.16.0",
     "lucide-react": "^1.79.0",
     "next": "16.4.6",

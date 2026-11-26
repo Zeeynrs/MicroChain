@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -58,12 +58,49 @@ describe("HomePage (landing)", () => {
     expect(screen.getByRole("link", { name: "Lewati ke isi" })).toHaveAttribute("href", "#isi");
     expect(screen.getAllByRole("link", { name: "MicroChain, beranda" }).length).toBeGreaterThan(0);
   });
+
+  it("renders pain points, interactive 3-scenario Dapur Sari preview with live slider, 4 feature modules, comparison, and FAQ", async () => {
+    render(<HomePage />);
+    expect(screen.getByRole("heading", { name: /Keputusan dapur saat pasokan macet/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Jaringan Pasok Interaktif" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Simulator Gangguan & Rencana Produksi" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Perbandingan 3 Skenario & Margin Pulih" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Data Usaha, Penanda Basi & Workspace Pribadi" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Bedanya menebak manual dengan menghitung lewat MicroChain/ })).toBeInTheDocument();
+    expect(screen.getByText("Apa itu MicroChain?")).toBeInTheDocument();
+
+    // Interactive scenario tabs & live backup-pack slider recalculate Dapur Sari deterministically
+    const panel = () => screen.getByRole("tabpanel");
+    expect(panel()).toHaveTextContent(/68 buah/);
+    const slider = screen.getByLabelText(/Simulasikan batas pak Pemasok B/);
+    fireEvent.change(slider, { target: { value: "6" } });
+    expect(panel()).toHaveTextContent(/44 buah/);
+    expect(panel()).toHaveTextContent(/Rp\s*276\.000/);
+    await userEvent.click(screen.getByRole("button", { name: /Reset/ }));
+    expect(panel()).toHaveTextContent(/68 buah/);
+
+    await userEvent.click(screen.getByRole("tab", { name: /Pemasok Utama Gagal/ }));
+    expect(panel()).toHaveTextContent(/20 buah/);
+    expect(panel()).toHaveTextContent(/Turun Rp 240\.000/);
+    await userEvent.click(screen.getByRole("tab", { name: /Normal/ }));
+    expect(panel()).toHaveTextContent(/100 buah/);
+  });
+
+  it("wires GSAP responsive scroll choreography hooks and scroll progress indicator cleanly", () => {
+    const { container, unmount } = render(<HomePage />);
+    expect(container.querySelector("[data-gsap='scroll-progress']")).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-gsap='pain-row']")).toHaveLength(4);
+    expect(container.querySelectorAll("[data-gsap='spotlight-row']")).toHaveLength(2);
+    expect(container.querySelectorAll("[data-gsap='step-card']")).toHaveLength(3);
+    unmount();
+  });
 });
 
 describe("LoginPage", () => {
-  it("is a password login with a demo escape hatch and no Dapur Sari clone promise", () => {
+  it("is a split-screen password login with generated kitchen photo, demo escape hatch, and no Dapur Sari clone promise", () => {
     render(<LoginPage />);
     expect(screen.getByRole("heading", { level: 1, name: "Masuk ke workspace" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Pemilik usaha roti menyiapkan bahan baku/ })).toHaveAttribute("src", "/login-kitchen.webp");
     expect(screen.getByRole("link", { name: "Buka demo tanpa masuk" })).toHaveAttribute("href", "/dashboard");
     expect(screen.getByText(/Workspace kosong milik Anda/)).toBeInTheDocument();
     expect(screen.queryByText(/Dapur Sari Anda/)).not.toBeInTheDocument();
@@ -71,11 +108,16 @@ describe("LoginPage", () => {
 });
 
 describe("LoginForm (password only; link only for forgot password)", () => {
-  it("has no magic-link login: no tab, no OTP call, no 'Kirim Tautan Masuk'", async () => {
+  it("has no magic-link login and toggles password visibility cleanly", async () => {
     render(<LoginForm />);
     expect(screen.queryByRole("button", { name: /Tautan email/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Kirim Tautan Masuk" })).not.toBeInTheDocument();
-    expect(screen.getByLabelText("Kata sandi")).toBeInTheDocument();
+    const pwd = screen.getByLabelText("Kata sandi");
+    expect(pwd).toHaveAttribute("type", "password");
+    await userEvent.click(screen.getByRole("button", { name: "Tampilkan kata sandi" }));
+    expect(pwd).toHaveAttribute("type", "text");
+    await userEvent.click(screen.getByRole("button", { name: "Sembunyikan kata sandi" }));
+    expect(pwd).toHaveAttribute("type", "password");
     expect(signInWithOtp).not.toHaveBeenCalled();
   });
 
