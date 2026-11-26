@@ -62,6 +62,9 @@ describe("HomePage (landing)", () => {
   it("renders pain points, interactive 3-scenario Dapur Sari preview with live slider, 4 feature modules, comparison, and FAQ", async () => {
     render(<HomePage />);
     expect(screen.getByRole("heading", { name: /Keputusan dapur saat pasokan macet/ })).toBeInTheDocument();
+    expect(screen.getByText("Gambaran 1 dari 4")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /Dengan sisa stok di rak/ }));
+    expect(screen.getByText("Gambaran 2 dari 4")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Jaringan Pasok Interaktif" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Simulator Gangguan & Rencana Produksi" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Perbandingan 3 Skenario & Margin Pulih" })).toBeInTheDocument();
@@ -91,7 +94,7 @@ describe("HomePage (landing)", () => {
     expect(container.querySelector("[data-gsap='scroll-progress']")).toBeInTheDocument();
     expect(container.querySelector("[data-gsap='carousel']")).toBeInTheDocument();
     expect(container.querySelectorAll("[data-gsap='pain-row']")).toHaveLength(4);
-    expect(container.querySelectorAll("img[src^='/landing/pain-']")).toHaveLength(4);
+    expect(container.querySelector(".pain-stage-frame .pv-scene")).toBeInTheDocument();
     expect(container.querySelectorAll("[data-gsap='spotlight-row']")).toHaveLength(2);
     expect(container.querySelectorAll("[data-gsap='step-card']")).toHaveLength(3);
     unmount();
