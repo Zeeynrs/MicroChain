@@ -91,6 +91,7 @@ describe("HomePage (landing)", () => {
     expect(container.querySelector("[data-gsap='scroll-progress']")).toBeInTheDocument();
     expect(container.querySelector("[data-gsap='carousel']")).toBeInTheDocument();
     expect(container.querySelectorAll("[data-gsap='pain-row']")).toHaveLength(4);
+    expect(container.querySelectorAll("img[src^='/landing/pain-']")).toHaveLength(4);
     expect(container.querySelectorAll("[data-gsap='spotlight-row']")).toHaveLength(2);
     expect(container.querySelectorAll("[data-gsap='step-card']")).toHaveLength(3);
     unmount();

@@ -136,19 +136,18 @@ export function LandingMotion({ children }: { children: ReactNode }) {
           });
         });
 
-        // 3. Pain ledger rows staggered cascade
+        // 3. Pain point visual bento cards cascade
         const painRows = root.querySelectorAll<HTMLElement>("[data-gsap='pain-row']");
         if (painRows.length > 0) {
           gsap.from(painRows, {
-            x: isDesktop ? -18 : 0,
-            y: isDesktop ? 0 : 16,
+            y: isDesktop ? 24 : 16,
             opacity: 0,
-            duration: 0.58,
-            stagger: 0.09,
-            ease: "power2.out",
+            duration: 0.62,
+            stagger: 0.1,
+            ease: "power3.out",
             clearProps: "transform,opacity",
             scrollTrigger: {
-              trigger: ".pain-ledger",
+              trigger: ".pain-grid",
               start: triggerStart,
               once: true,
               fastScrollEnd: true,
