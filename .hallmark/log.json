@@ -1,0 +1,37 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Narrative Workflow",
+  "theme": "vantage",
+  "axes": "dark/grotesk-sans/chromatic-lime",
+  "hero": "Settled",
+  "nav": "three-part bar",
+  "footer": "statement",
+  "imagery": "the product built (solution-space lattice), user photographs muted",
+  "photos": [],
+  "entry": "hero lattice",
+  "fingerprint": "4584b9",
+  "sections": [
+   "hero",
+   "pinned",
+   "working control",
+   "rail+grid",
+   "switcher",
+   "table",
+   "index",
+   "rows",
+   "band"
+  ],
+  "signature": "Dapur Sari solution space as points, optimum in lime",
+  "waived": [
+   "39b",
+   "85",
+   "44c",
+   "72"
+  ],
+  "prompt": "supply-chain resilience simulator for Indonesian food UMKM, MILP production planning",
+  "date": "2026-11-27"
+ }
+]

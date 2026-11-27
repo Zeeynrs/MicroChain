@@ -192,7 +192,7 @@ export function CoachMarks({ steps, index, base, onIndex, onClose }: Props) {
         aria-describedby="tour-text"
         aria-busy={!ready}
       >
-        <div className="tour-progress" aria-hidden="true"><span style={{ width: `${percent}%` }} /></div>
+        <div className="tour-progress" aria-hidden="true"><span style={{ transform: `scaleX(${percent / 100})` }} /></div>
         <div key={index} className="tour-card-body">
         <p className="tour-count">Langkah {index + 1} dari {steps.length}</p>
         <h2 id="tour-title" ref={titleRef} tabIndex={-1}>{step.title}</h2>

@@ -91,15 +91,15 @@ function SingleSourceVisual() {
           <span className="pv-node-dot" />
           <div>
             <strong>Tepung terigu</strong>
-            <small>1 pemasok · Sisa 8 kg</small>
+            <small>1 pemasok, sisa 8 kg</small>
           </div>
         </div>
       </div>
 
       <div className="pv-link is-branch">
-        <svg viewBox="0 0 28 72" fill="none" className="pv-branch-svg">
-          <path d="M0 36 C14 36, 12 16, 28 16" stroke="#c88d3a" strokeWidth="1.8" strokeDasharray="3 3" />
-          <path d="M0 36 C14 36, 12 56, 28 56" stroke="#c88d3a" strokeWidth="1.8" strokeDasharray="3 3" />
+        <svg viewBox="0 0 28 72" fill="none" className="pv-branch-svg" aria-hidden="true">
+          <path d="M0 36 C14 36, 12 16, 28 16" stroke="currentColor" strokeWidth="2" strokeDasharray="3 3" />
+          <path d="M0 36 C14 36, 12 56, 28 56" stroke="currentColor" strokeWidth="2" strokeDasharray="3 3" />
         </svg>
       </div>
 
@@ -128,7 +128,7 @@ function PriorityMixVisual() {
       <div className="pv-bars">
         <div className="pv-bar-row">
           <div className="pv-bar-meta">
-            <span><strong>Kue kering</strong> · Rp 50 rb/kg</span>
+            <span><strong>Kue kering</strong>, Rp 50 rb/kg</span>
             <strong>30 unit (#1)</strong>
           </div>
           <div className="pv-bar-track">
@@ -138,7 +138,7 @@ function PriorityMixVisual() {
 
         <div className="pv-bar-row">
           <div className="pv-bar-meta">
-            <span><strong>Roti</strong> · Rp 12 rb/kg</span>
+            <span><strong>Roti</strong>, Rp 12 rb/kg</span>
             <span>20 unit (sisa)</span>
           </div>
           <div className="pv-bar-track">
@@ -184,7 +184,7 @@ function PremiumTradeoffVisual() {
       <div className="pv-net-box">
         <span className="pv-net-label">
           <Check size={13} strokeWidth={2.5} />
-          Layak dibeli · Pulih bersih
+          Layak dibeli, pulih bersih
         </span>
         <strong>+Rp 132.000</strong>
       </div>
@@ -200,7 +200,7 @@ function CutoffTimelineVisual() {
           <span className="pv-tl-badge"><Check size={11} strokeWidth={2.6} /></span>
           <div>
             <strong>Pemasok B</strong>
-            <small>Tiba H+1 · Dipakai</small>
+            <small>Tiba H+1, dipakai</small>
           </div>
         </div>
 
@@ -208,7 +208,7 @@ function CutoffTimelineVisual() {
           <span className="pv-tl-badge"><X size={11} strokeWidth={2.6} /></span>
           <div>
             <strong>Pemasok C</strong>
-            <small>Tiba H+3 · Disaring</small>
+            <small>Tiba H+3, disaring</small>
           </div>
         </div>
       </div>
@@ -249,10 +249,9 @@ export function LandingPainShowcase() {
 
   return (
     <div className="pain-layout">
-      <div className="section-intro pain-sticky" data-gsap="reveal-up">
-        <p className="section-kicker">Pertanyaan untuk pemilik usaha makanan</p>
+      <div className="pain-sticky" data-gsap="reveal-up">
         <h2 id="masalah-title">Keputusan dapur saat pasokan macet jangan lagi pakai kira-kira.</h2>
-        <p className="section-lead">
+        <p className="lead">
           Bisa membuat makanan enak saja tidak cukup ketika satu bahan utama terlambat datang. Pilih poin di samping untuk melihat gambaran perhitungannya.
         </p>
 
@@ -286,14 +285,9 @@ export function LandingPainShowcase() {
                 onClick={() => setActiveIndex(idx)}
                 onMouseEnter={() => setActiveIndex(idx)}
               >
-                <div className="pain-list-top">
-                  <span className={`tag tag-${item.tone}`}>{item.risk}</span>
-                  <span className="pain-list-index">
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                </div>
                 <h3>{item.question}</h3>
                 <p>{item.answer}</p>
+                <span className={`tag tag-${item.tone}`}>{item.risk}</span>
               </button>
 
               {isActive ? (

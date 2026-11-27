@@ -5,7 +5,6 @@ import {
   AlertTriangle,
   ArrowRight,
   CheckCircle2,
-  ChevronRight,
   Package,
   RotateCcw,
   ShieldCheck,
@@ -158,19 +157,9 @@ export function LandingScenarioPreview() {
 
   return (
     <div className="preview-window" aria-label="Pratinjau simulasi Dapur Sari">
-      <div className="preview-chrome">
-        <div className="preview-chrome-left">
-          <div className="preview-dots" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <span className="preview-address">microchain.app/demo/dapur-sari</span>
-        </div>
-        <div className="preview-chrome-right">
-          <span className="preview-date-chip">Horizon 23–24 Nov 2026</span>
-          <span className="preview-pill">Solver MILP</span>
-        </div>
+      <div className="preview-toolbar">
+        <span className="preview-date-chip">Horizon 23 sampai 24 Nov 2026</span>
+        <span className="preview-pill">Solver MILP</span>
       </div>
 
       <div className="preview-body">
@@ -188,7 +177,6 @@ export function LandingScenarioPreview() {
                 className={`preview-tab ${isSelected ? "is-active" : ""}`}
                 onClick={() => setActiveId(item.id)}
               >
-                <span className={`preview-tab-dot tone-${item.tone}`} aria-hidden="true" />
                 <span className="preview-tab-copy">
                   <strong>{item.tabLabel}</strong>
                   <small>{formatIdr(item.netContribution)}</small>
@@ -376,7 +364,7 @@ export function LandingScenarioPreview() {
                     <div className="preview-bar-track" aria-hidden="true">
                       <span
                         className={`preview-bar-fill tone-${item.tone}`}
-                        style={{ width: `${pct}%` }}
+                        style={{ transform: `scaleX(${pct / 100})` }}
                       />
                     </div>
                     <small>{pct}% dari target normal</small>
@@ -393,9 +381,9 @@ export function LandingScenarioPreview() {
               </strong>
             </div>
 
-            <Button asChild size="sm" className="preview-cta">
+            <Button asChild variant="outline" className="preview-cta">
               <Link href="/dashboard">
-                Ubah stok &amp; resep lengkap di Demo <ChevronRight size={16} aria-hidden="true" />
+                Ubah stok &amp; resep di demo
               </Link>
             </Button>
           </aside>

@@ -1,17 +1,4 @@
-import {
-  ArrowDown,
-  BarChart3,
-  Check,
-  ChevronDown,
-  ChevronRight,
-  Database,
-  FlaskConical,
-  GitFork,
-  PackageOpen,
-  Store,
-  UtensilsCrossed,
-  X,
-} from "lucide-react";
+import { BarChart3, Check, ChevronDown, Database, FlaskConical, GitFork, PackageOpen, Store, UtensilsCrossed, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Brand } from "@/components/brand";
@@ -20,13 +7,13 @@ import { LandingCarousel } from "@/components/landing/landing-carousel";
 import { LandingScenarioPreview } from "@/components/landing/landing-interactive";
 import { LandingMotion } from "@/components/landing/landing-motion";
 import { LandingPainShowcase } from "@/components/landing/pain-showcase";
+import { PlanLattice } from "@/components/landing/plan-lattice";
 import { Button } from "@/components/ui/button";
 
 const spotlightModules = [
   {
     label: "Modul 01",
-    caption: "Tepung terigu — 1 pemasok utama",
-    captionTone: "warning" as const,
+    caption: "Tepung terigu, 1 pemasok utama",
     title: "Jaringan Pasok Interaktif",
     description:
       "Visualisasikan seluruh alur dari pemasok, bahan baku, hingga produk jadi dalam satu layar. Titik rawan sumber tunggal langsung terlihat sebelum masalah terjadi.",
@@ -40,8 +27,7 @@ const spotlightModules = [
   },
   {
     label: "Modul 02",
-    caption: "Optimal — 68 Roti & 30 Kue kering",
-    captionTone: "good" as const,
+    caption: "Optimal: 68 Roti dan 30 Kue kering",
     title: "Simulator Gangguan & Rencana Produksi",
     description:
       "Uji skenario Normal, Pemasok Utama Gagal, keterlambatan kirim, hingga aktivasi pemasok alternatif. Perhitungan dijalankan solver optimasi bilangan bulat (MILP) di server.",
@@ -61,7 +47,7 @@ const secondaryModules = [
     caption: "Pulih +Rp 132.000 (55%)",
     title: "Perbandingan 3 Skenario & Margin Pulih",
     description:
-      "Lihat dampak finansial gangguan dan manfaat mitigasi dalam satu perbandingan berdampingan—lengkap dalam Rupiah maupun persentase.",
+      "Lihat dampak finansial gangguan dan manfaat mitigasi dalam satu perbandingan berdampingan, lengkap dalam Rupiah maupun persentase.",
     image: "/landing/modul-3-perbandingan.webp",
     imageAlt: "Loyang roti dan kue kering siap jual di meja kayu dengan pengiriman paket tepung cadangan di latar dapur",
     bullets: [
@@ -75,7 +61,7 @@ const secondaryModules = [
     caption: "Penanda hasil basi otomatis",
     title: "Data Usaha, Penanda Basi & Workspace Pribadi",
     description:
-      "Ubah stok, permintaan, resep (BOM), kontribusi, atau kapasitas cadangan kapan saja—baik di mode tamu maupun tersimpan permanen di akun usahamu.",
+      "Ubah stok, permintaan, resep (BOM), kontribusi, atau kapasitas cadangan kapan saja, baik di mode tamu maupun tersimpan permanen di akun usahamu.",
     image: "/landing/modul-4-data.webp",
     imageAlt: "Pemilik usaha roti memperbarui data stok bahan dan rencana produksi di laptop di meja dapur",
     bullets: [
@@ -109,24 +95,31 @@ const comparisonRows = [
   },
 ];
 
+/* The three steps double as the three stages of the Dapur Sari outage: the figures come from the demo's own scenarios. */
 const steps = [
   {
-    num: "01",
+    num: 1,
     icon: GitFork,
     title: "Petakan jaringan pasok",
     text: "Lihat hubungan pemasok, bahan baku, dan produk dalam satu peta serta kenali bahan yang bergantung pada satu pemasok.",
+    figure: "450.000",
+    figureLabel: "Kontribusi bersih normal, kiriman 25 kg tepung Pemasok A tiba tepat waktu.",
   },
   {
-    num: "02",
+    num: 2,
     icon: FlaskConical,
     title: "Uji gangguan pasokan",
     text: "Simulasikan pemasok utama gagal dan lihat produksi yang bisa dipenuhi dari stok serta penawaran pemasok cadangan.",
+    figure: "210.000",
+    figureLabel: "Pemasok A gagal kirim. Dengan sisa 8 kg tepung, kontribusi turun 53%.",
   },
   {
-    num: "03",
+    num: 3,
     icon: BarChart3,
     title: "Bandingkan rencana produksi",
     text: "Ukur manfaat pemasok cadangan setelah biaya tambahan pasokan dan pilih rencana dengan kontribusi bersih tertinggi.",
+    figure: "342.000",
+    figureLabel: "12 pak Pemasok B memulihkan 55% kerugian, setelah premi Rp 12.000.",
   },
 ];
 
@@ -164,308 +157,273 @@ const faqs = [
   },
 ];
 
+const allModules = [...spotlightModules, ...secondaryModules];
+
+function ModuleBullets({ bullets }: { bullets: string[] }) {
+  return (
+    <ul className="module-bullets">
+      {bullets.map((bullet) => (
+        <li key={bullet}>
+          <Check size={16} strokeWidth={1.75} aria-hidden="true" />
+          <span>{bullet}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function LandingPage() {
   return (
     <LandingMotion>
       <a className="skip-link" href="#isi">Lewati ke isi</a>
 
-      <header className="landing-header-wrap">
-        <div className="landing-top landing-width">
+      <header className="nav-wrap">
+        <div className="shell nav">
           <Brand />
-          <nav aria-label="Navigasi beranda">
-            <a href="#masalah" className="landing-nav-link">Tantangan</a>
-            <a href="#simulasi-dapur-sari" className="landing-nav-link">Contoh kasus</a>
-            <a href="#fitur" className="landing-nav-link">Fitur</a>
-            <a href="#cara-kerja" className="landing-nav-link">Cara kerja</a>
-            <a href="#faq" className="landing-nav-link">FAQ</a>
-            <Link href="/login" className="landing-nav-link landing-nav-login">Masuk</Link>
-            <Button asChild variant="outline" size="sm">
-              <Link href="/dashboard">
-                Buka ruang demo <ChevronRight size={16} aria-hidden="true" />
-              </Link>
-            </Button>
+          <nav className="nav-links" aria-label="Navigasi beranda">
+            <div className="nav-anchors">
+              <a href="#masalah" className="nav-link nav-anchor">Tantangan</a>
+              <a href="#simulasi-dapur-sari" className="nav-link nav-anchor">Contoh kasus</a>
+              <a href="#fitur" className="nav-link nav-anchor">Fitur</a>
+              <a href="#cara-kerja" className="nav-link nav-anchor">Cara kerja</a>
+              <a href="#faq" className="nav-link nav-anchor">FAQ</a>
+            </div>
+            <div className="nav-end">
+              <Link href="/login" className="nav-link">Masuk</Link>
+              <Button asChild variant="outline" size="sm">
+                <Link href="/dashboard">Buka ruang demo</Link>
+              </Button>
+            </div>
           </nav>
         </div>
-        <div className="landing-scroll-track" aria-hidden="true">
-          <span className="landing-scroll-progress" data-gsap="scroll-progress" />
+        <div className="nav-progress" aria-hidden="true">
+          <span data-gsap="scroll-progress" />
         </div>
       </header>
 
       <main id="isi">
-        <section className="landing-video-hero" aria-labelledby="hero-title">
-          <HeroVideoBackground />
-          <div className="landing-hero-inner landing-width">
-            <div className="hero-copy hero-copy-light">
-              <div className="hero-context hero-context-light" data-gsap="hero-item">
-                <span aria-hidden="true" /> Perencanaan pasokan UMKM makanan
-              </div>
-              <h1 id="hero-title" data-gsap="hero-item">
-                Saat pasokan<br className="hero-break" /> terganggu,<br className="hero-break" />{" "}
-                <em>produksi tetap<br className="hero-break" /> terencana.</em>
-              </h1>
-              <p data-gsap="hero-item">
-                Petakan pemasok, uji dampak gangguan bahan baku, dan hitung rencana produksi serta pembelian cadangan paling menguntungkan berdasarkan stok dan biayamu sendiri.
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="shell hero-grid">
+            <div className="hero-copy">
+              <h1 id="hero-title" data-gsap="hero-item">Saat pasokan terganggu, produksi tetap terencana.</h1>
+              <p className="lead" data-gsap="hero-item">
+                Petakan pemasok, uji gangguan bahan baku, dan hitung rencana produksi paling menguntungkan.
               </p>
               <div className="hero-actions" data-gsap="hero-item">
-                <Button asChild variant="inverse">
-                  <Link href="/dashboard">
-                    Coba Demo Dapur Sari <ChevronRight size={20} aria-hidden="true" />
-                  </Link>
+                <Button asChild>
+                  <Link href="/login">Buat workspace</Link>
                 </Button>
-                <a href="#galeri-usaha" className="hero-secondary-link hero-secondary-light">
-                  Jelajahi contoh UMKM <ArrowDown size={15} aria-hidden="true" />
-                </a>
+                <Button asChild variant="outline">
+                  <Link href="/dashboard">Coba Demo Dapur Sari</Link>
+                </Button>
               </div>
-              <ul className="hero-checks hero-checks-light" aria-label="Keunggulan utama" data-gsap="hero-item">
-                <li><Check size={15} aria-hidden="true" /> Langsung dicoba tanpa login</li>
-                <li><Check size={15} aria-hidden="true" /> Optimasi deterministik (MILP)</li>
-                <li><Check size={15} aria-hidden="true" /> Simpan data usahamu sendiri</li>
-              </ul>
-              <small data-gsap="hero-item">Studi kasus fiktif Dapur Sari siap dicoba langsung di browser</small>
             </div>
 
-            <aside className="hero-floating-card" data-gsap="hero-ticket" aria-label="Ringkasan studi kasus Dapur Sari">
-              <div className="hero-ticket-heading">
-                <span className="ticket-mark"><Store size={19} aria-hidden="true" /></span>
-                <span>
-                  <strong>Dapur Sari</strong>
-                  <small>Usaha roti &amp; kue dalam demo</small>
-                </span>
-                <span className="hero-ticket-badge">Pulih 55%</span>
-              </div>
-              <div className="hero-ticket-flow">
-                <PackageOpen size={15} aria-hidden="true" /> Pemasok <ChevronRight size={13} aria-hidden="true" /> Bahan <ChevronRight size={13} aria-hidden="true" /> Produksi
-              </div>
-              <div className="hero-ticket-metrics">
-                <div>
-                  <span>Normal</span>
-                  <strong>Rp&nbsp;450&nbsp;rb</strong>
-                </div>
-                <div>
-                  <span>Gagal kirim</span>
-                  <strong className="metric-bad">Rp&nbsp;210&nbsp;rb</strong>
-                </div>
-                <div>
-                  <span>Mitigasi</span>
-                  <strong className="metric-good">Rp&nbsp;342&nbsp;rb</strong>
-                </div>
-              </div>
-              <p className="hero-card-caption">
-                Saat Pemasok A gagal kirim 25 kg tepung, aktivasi 12 pak Pemasok B memulihkan Rp&nbsp;132.000 kontribusi bersih.
-              </p>
-            </aside>
+            <figure className="hero-media ticks">
+              <PlanLattice scenario="mitigation" className="hero-lattice" />
+              <figcaption>
+                <span>Dapur Sari, studi kasus fiktif yang bisa langsung dicoba di browser.</span>
+                <span>Tiap titik satu rencana produksi; tinggi titik adalah kontribusi bersih.</span>
+              </figcaption>
+            </figure>
           </div>
         </section>
 
-        <section id="galeri-usaha" className="landing-section landing-carousel-band" aria-labelledby="galeri-title">
-          <div className="landing-width">
-            <div className="section-header-split" data-gsap="reveal-up">
-              <div>
-                <p className="section-kicker">Penerapan lintas jenis UMKM kuliner</p>
-                <h2 id="galeri-title">Dari toko roti hingga kedai kopi, satu alat untuk mengamankan produksi harian.</h2>
+        <section id="cara-kerja" className="story" aria-labelledby="steps-title" data-story data-stage="1">
+          <div className="shell">
+            <h2 id="steps-title" data-gsap="reveal-up">Dari stok bahan ke rencana produksi</h2>
+            <div className="story-grid">
+              <div className="story-pin">
+                <div className="story-stage ticks" aria-hidden="true">
+                  <p className="story-figure">
+                    <span className="story-figure-unit">Rp</span>
+                    <span className="figure" data-story-figure>450.000</span>
+                  </p>
+                  <PlanLattice follow="[data-story]" className="story-lattice" />
+                  <div className="story-diagram" aria-label="Diagram jaringan pasok Dapur Sari">
+                    <div className="net-col">
+                      <span className="net-node net-a">
+                        <strong>Pemasok A</strong>
+                        <small className="net-state" data-for="1">Kirim 25 kg</small>
+                        <small className="net-state" data-for="2 3">Gagal kirim</small>
+                      </span>
+                      <span className="net-node net-b">
+                        <strong>Pemasok B</strong>
+                        <small className="net-state" data-for="1 2">Cadangan</small>
+                        <small className="net-state" data-for="3">+12 pak</small>
+                      </span>
+                    </div>
+                    <div className="net-col net-mid">
+                      <span className="net-node net-flour">
+                        <strong>Tepung terigu</strong>
+                        <small className="net-state" data-for="1">33 kg tersedia</small>
+                        <small className="net-state" data-for="2">Sisa 8 kg</small>
+                        <small className="net-state" data-for="3">20 kg tersedia</small>
+                      </span>
+                    </div>
+                    <div className="net-col">
+                      <span className="net-node net-out">
+                        <strong>Roti</strong>
+                        <small className="net-state" data-for="1">100 buah</small>
+                        <small className="net-state" data-for="2">20 buah</small>
+                        <small className="net-state" data-for="3">68 buah</small>
+                      </span>
+                      <span className="net-node net-out">
+                        <strong>Kue kering</strong>
+                        <small>30 buah</small>
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p className="section-lead">
-                Geser atau pilih jenis usaha di bawah untuk melihat bagaimana MicroChain membantu menghadapi gangguan pasokan bahan utama.
+
+              <ol className="story-steps">
+                {steps.map(({ num, icon: Icon, title, text, figure, figureLabel }) => (
+                  <li key={title} className="story-step" data-step={num}>
+                    <article className="step-card" data-gsap="step-card">
+                      <div className="step-head">
+                        <span className="step-num" aria-hidden="true">{num}</span>
+                        <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
+                      </div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                      <p className="step-fact">
+                        <strong className="num">Rp {figure}</strong>
+                        <span>{figureLabel}</span>
+                      </p>
+                    </article>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section id="simulasi-dapur-sari" className="section" aria-labelledby="simulasi-title">
+          <div className="shell">
+            <div className="head-split" data-gsap="reveal-up">
+              <h2 id="simulasi-title">Coba simulasi Dapur Sari di sini</h2>
+              <p className="lead">
+                Pilih skenario dan geser batas paket Pemasok B untuk melihat rencana produksi Roti &amp; Kue kering serta kontribusi bersih berubah seketika.
+              </p>
+            </div>
+            <LandingScenarioPreview />
+          </div>
+        </section>
+
+        <section id="galeri-usaha" className="section band-quiet" aria-labelledby="galeri-title">
+          <div className="shell">
+            <div className="head-split" data-gsap="reveal-up">
+              <h2 id="galeri-title">Dari toko roti hingga kedai kopi</h2>
+              <p className="lead">
+                Satu alat untuk mengamankan produksi harian. Geser atau pilih jenis usaha untuk melihat bagaimana MicroChain menghadapi gangguan pasokan bahan utama.
               </p>
             </div>
 
             <div data-gsap="carousel">
               <LandingCarousel />
             </div>
-          </div>
-        </section>
 
-        <section id="masalah" className="landing-section landing-width" aria-labelledby="masalah-title">
-          <LandingPainShowcase />
-        </section>
-
-        <section id="simulasi-dapur-sari" className="landing-section landing-surface-band" aria-labelledby="simulasi-title">
-          <div className="landing-width">
-            <div className="section-header-split" data-gsap="reveal-up">
-              <div>
-                <p className="section-kicker">Contoh kasus nyata dalam demo</p>
-                <h2 id="simulasi-title">Lihat bagaimana Dapur Sari memulihkan 55% kerugian saat pemasok tepung gagal kirim.</h2>
-              </div>
-              <p className="section-lead">
-                Pilih skenario di bawah ini dan geser batas paket Pemasok B untuk melihat rencana produksi Roti &amp; Kue kering serta kontribusi bersih berubah seketika.
-              </p>
-            </div>
-
-            <LandingScenarioPreview />
-          </div>
-        </section>
-
-        <section id="fitur" className="landing-section landing-width" aria-labelledby="fitur-title">
-          <div className="section-header-split" data-gsap="reveal-up">
-            <div>
-              <p className="section-kicker">Empat modul dalam satu ruang kerja</p>
-              <h2 id="fitur-title">Semua yang dibutuhkan untuk memetakan risiko hingga memilih rencana produksi.</h2>
-            </div>
-            <p className="section-lead">
-              Dirancang khusus untuk alur kerja UMKM makanan—ringkas dipelajari, tetapi memakai perhitungan optimasi yang konsisten dan transparan.
-            </p>
-          </div>
-
-          <div className="spotlight-stack">
-            {spotlightModules.map((mod, index) => (
-              <article key={mod.title} className={`spotlight-row ${index % 2 === 1 ? "is-reversed" : ""}`} data-gsap="spotlight-row">
-                <figure className="module-media" data-gsap="spotlight-media">
-                  <Image
-                    src={mod.image}
-                    alt={mod.imageAlt}
-                    width={1200}
-                    height={900}
-                    unoptimized
-                    loading="eager"
-                    className="module-image"
-                  />
-                  <figcaption className={`media-pill tone-${mod.captionTone}`}>
-                    <span aria-hidden="true" />
-                    {mod.caption}
-                  </figcaption>
-                </figure>
-                <div className="module-copy" data-gsap="spotlight-copy">
-                  <span className="module-tag">{mod.label}</span>
-                  <h3>{mod.title}</h3>
-                  <p>{mod.description}</p>
-                  <ul className="module-bullets">
-                    {mod.bullets.map((bullet) => (
-                      <li key={bullet}>
-                        <Check size={16} aria-hidden="true" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="secondary-module-grid">
-            {secondaryModules.map((mod) => (
-              <article key={mod.title} className="secondary-module-card" data-gsap="secondary-card">
-                <figure className="module-media">
-                  <Image
-                    src={mod.image}
-                    alt={mod.imageAlt}
-                    width={1200}
-                    height={900}
-                    unoptimized
-                    loading="eager"
-                    className="module-image"
-                  />
-                  <figcaption className="media-pill tone-good">
-                    <span aria-hidden="true" />
-                    {mod.caption}
-                  </figcaption>
-                </figure>
-                <div className="secondary-module-body">
-                  <span className="module-tag">{mod.label}</span>
-                  <h3>{mod.title}</h3>
-                  <p>{mod.description}</p>
-                  <ul className="module-bullets">
-                    {mod.bullets.map((bullet) => (
-                      <li key={bullet}>
-                        <Check size={15} aria-hidden="true" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="landing-section landing-contrast-band" aria-labelledby="compare-method-title">
-          <div className="landing-width">
-            <div className="section-header-split" data-gsap="reveal-up">
-              <div>
-                <p className="section-kicker">Mengapa simulasi terstruktur</p>
-                <h2 id="compare-method-title">Bedanya menebak manual dengan menghitung lewat MicroChain.</h2>
-              </div>
-              <p className="section-lead">
-                Saat gangguan datang mendadak, keputusan cepat tetap bisa akurat jika stok, resep, dan penawaran cadangan sudah siap disimulasikan.
-              </p>
-            </div>
-
-            <div className="versus-board" role="region" aria-label="Perbandingan cara manual dan MicroChain">
-              <div className="versus-head">
-                <span>Situasi di dapur</span>
-                <span className="versus-col-old">Hitung manual / kira-kira</span>
-                <span className="versus-col-new">Dengan MicroChain</span>
-              </div>
-              {comparisonRows.map((row) => (
-                <div key={row.topic} className="versus-row" data-gsap="versus-row">
-                  <strong className="versus-topic">{row.topic}</strong>
-                  <p className="versus-old">
-                    <X size={15} aria-hidden="true" />
-                    <span>{row.manual}</span>
-                  </p>
-                  <p className="versus-new">
-                    <Check size={15} aria-hidden="true" />
-                    <span>{row.microchain}</span>
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="cara-kerja" className="landing-dark-band" aria-labelledby="steps-title">
-          <div className="landing-width">
-            <div className="landing-steps-dark">
-              <div className="steps-header" data-gsap="reveal-up">
-                <p>Cara kerja</p>
-                <h2 id="steps-title">Dari stok bahan ke rencana produksi</h2>
-              </div>
-              <div className="step-list-dark">
-                {steps.map(({ num, icon: Icon, title, text }) => (
-                  <article key={title} className="step-card-dark" data-gsap="step-card">
-                    <div className="step-card-top">
-                      <span className="step-num">{num}</span>
-                      <Icon size={21} strokeWidth={1.7} aria-hidden="true" />
-                    </div>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div className="audience-strip" aria-label="Jenis usaha yang cocok menggunakan MicroChain">
-              <p className="audience-label" data-gsap="reveal-up">Cocok untuk berbagai jenis UMKM makanan &amp; minuman</p>
-              <div className="audience-grid">
+            <div className="audience" aria-labelledby="audience-title">
+              <h3 id="audience-title" className="audience-title">Cocok untuk berbagai jenis UMKM makanan &amp; minuman</h3>
+              <ul className="audience-grid">
                 {businessTypes.map(({ icon: Icon, name, detail }) => (
-                  <div key={name} className="audience-item" data-gsap="audience-item">
-                    <span className="audience-icon" aria-hidden="true"><Icon size={17} /></span>
-                    <div>
-                      <strong>{name}</strong>
-                      <small>{detail}</small>
-                    </div>
-                  </div>
+                  <li key={name} className="audience-item">
+                    <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
+                    <strong>{name}</strong>
+                    <span>{detail}</span>
+                  </li>
                 ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="masalah" className="section" aria-labelledby="masalah-title">
+          <div className="shell">
+            <LandingPainShowcase />
+
+            <div className="versus" role="region" aria-labelledby="compare-method-title">
+              <div className="head-split" data-gsap="reveal-up">
+                <h2 id="compare-method-title">Bedanya menebak manual dengan menghitung lewat MicroChain.</h2>
+                <p className="lead">
+                  Saat gangguan datang mendadak, keputusan cepat tetap bisa akurat jika stok, resep, dan penawaran cadangan sudah siap disimulasikan.
+                </p>
+              </div>
+              <div className="versus-scroll">
+                <table className="versus-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Situasi di dapur</th>
+                      <th scope="col">Hitung manual atau kira-kira</th>
+                      <th scope="col">Dengan MicroChain</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comparisonRows.map((row) => (
+                      <tr key={row.topic}>
+                        <th scope="row">{row.topic}</th>
+                        <td className="versus-old">
+                          <X size={16} strokeWidth={1.75} aria-hidden="true" />
+                          <span>{row.manual}</span>
+                        </td>
+                        <td className="versus-new">
+                          <Check size={16} strokeWidth={1.75} aria-hidden="true" />
+                          <span>{row.microchain}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="faq" className="landing-section landing-width" aria-labelledby="faq-title">
-          <div className="faq-layout">
-            <div className="section-intro" data-gsap="reveal-up">
-              <p className="section-kicker">Pertanyaan umum</p>
-              <h2 id="faq-title">Hal yang sering ditanyakan sebelum mulai mencoba.</h2>
-              <p className="section-lead">
+        <section id="fitur" className="section" aria-labelledby="fitur-title">
+          <div className="shell">
+            <div className="head-split" data-gsap="reveal-up">
+              <h2 id="fitur-title">Empat modul dalam satu ruang kerja</h2>
+              <p className="lead">
+                Dirancang khusus untuk alur kerja UMKM makanan: ringkas dipelajari, tetapi memakai perhitungan optimasi yang konsisten dan transparan.
+              </p>
+            </div>
+
+            <ol className="module-index">
+              {allModules.map((mod, index) => (
+                <li key={mod.title} className="module-row" data-gsap={index < spotlightModules.length ? "spotlight-row" : "secondary-card"}>
+                  <figure className="module-media">
+                    <Image src={mod.image} alt={mod.imageAlt} width={1200} height={900} unoptimized loading="lazy" className="module-image" />
+                    <figcaption>
+                      <span>{mod.label}</span>
+                      <strong className="num">{mod.caption}</strong>
+                    </figcaption>
+                  </figure>
+                  <div className="module-copy">
+                    <h3>{mod.title}</h3>
+                    <p>{mod.description}</p>
+                  </div>
+                  <ModuleBullets bullets={mod.bullets} />
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section id="faq" className="section" aria-labelledby="faq-title">
+          <div className="shell faq-layout">
+            <div className="faq-head" data-gsap="reveal-up">
+              <h2 id="faq-title">Pertanyaan umum</h2>
+              <p className="lead">
                 Masih ragu bagaimana simulasi bekerja? Kamu bisa langsung membuka ruang demo Dapur Sari tanpa mendaftar apa pun.
               </p>
             </div>
-
             <div className="faq-list">
               {faqs.map(({ q, a }, index) => (
-                <details key={q} className="faq-item" open={index === 0} data-gsap="faq-item">
+                <details key={q} className="faq-item" open={index === 0}>
                   <summary>
                     <span>{q}</span>
-                    <ChevronDown size={18} aria-hidden="true" />
+                    <ChevronDown size={20} strokeWidth={1.5} aria-hidden="true" />
                   </summary>
                   <p>{a}</p>
                 </details>
@@ -474,42 +432,47 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="landing-closing-wrap landing-width" aria-labelledby="closing-title">
-          <div className="landing-closing" data-gsap="closing">
-            <div className="landing-closing-copy">
-              <p className="section-kicker">Siap menguji ketahanan dapurmu?</p>
-              <h2 id="closing-title">Simulasikan gangguan hari ini, sebelum benar-benar terjadi besok.</h2>
+        <section className="closing" aria-labelledby="closing-title">
+          <div className="shell closing-grid">
+            <div className="closing-side" data-gsap="reveal-up">
+              <h2 id="closing-title" className="closing-statement">
+                Simulasikan gangguan hari ini, sebelum benar‑benar terjadi besok.
+              </h2>
               <p>
                 Buka studi kasus Dapur Sari secara instan di browser, atau buat akun untuk menyimpan pemasok dan resep usahamu sendiri.
               </p>
+              <div className="closing-actions">
+                <Button asChild>
+                  <Link href="/login">Masuk ke workspace</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/dashboard">Mulai demo gratis</Link>
+                </Button>
+              </div>
             </div>
-            <div className="closing-actions">
-              <Button asChild variant="inverse">
-                <Link href="/dashboard">
-                  Mulai demo gratis <ChevronRight size={18} aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="closing-outline-btn">
-                <Link href="/login">Masuk ke workspace</Link>
-              </Button>
-            </div>
+            <figure className="closing-media ticks">
+              <div className="closing-video">
+                <HeroVideoBackground />
+              </div>
+              <figcaption>Dapur produksi pagi, latar video studi kasus Dapur Sari.</figcaption>
+            </figure>
           </div>
         </section>
       </main>
 
-      <footer className="landing-footer-wrap">
-        <div className="landing-footer landing-width">
-          <div className="landing-footer-brand">
+      <footer className="footer">
+        <div className="shell footer-inner">
+          <p className="footer-statement">Kenali Risiko. Simulasikan Dampak. Amankan Produksi.</p>
+          <div className="footer-base">
             <Brand />
-            <p>Kenali Risiko. Simulasikan Dampak. Amankan Produksi.</p>
+            <nav className="footer-links" aria-label="Tautan bawah">
+              <Link href="/dashboard">Ruang demo</Link>
+              <Link href="/network">Jaringan pasok</Link>
+              <Link href="/simulator">Simulator</Link>
+              <Link href="/comparison">Perbandingan</Link>
+              <Link href="/login">Masuk akun</Link>
+            </nav>
           </div>
-          <nav className="landing-footer-links" aria-label="Tautan bawah">
-            <Link href="/dashboard">Ruang demo</Link>
-            <Link href="/network">Jaringan pasok</Link>
-            <Link href="/simulator">Simulator</Link>
-            <Link href="/comparison">Perbandingan</Link>
-            <Link href="/login">Masuk akun</Link>
-          </nav>
         </div>
       </footer>
     </LandingMotion>

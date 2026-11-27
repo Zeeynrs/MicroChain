@@ -5,10 +5,11 @@ import { Boxes, Package, Truck } from "lucide-react";
 import type { NetworkEdge, NetworkKind, NetworkNode } from "@/lib/types";
 import { edgeLabel, kindLabel, statusLabel } from "./network-labels";
 import "@xyflow/react/dist/style.css";
+import { chartTokens } from "@/lib/chart-tokens";
 
 const kinds: NetworkKind[] = ["supplier", "material", "product"];
 const icons = { supplier: Truck, material: Boxes, product: Package };
-const line = { committed: "#397766", alternative: "#ab6b2b", bom: "#88958d" };
+const line = { committed: chartTokens.paper, alternative: chartTokens.warnInk, bom: chartTokens.line };
 
 type FlowNode = Node<{ item: NetworkNode }, "supply">;
 
@@ -45,7 +46,7 @@ export function NetworkCanvas({ nodes, edges, selected, onSelect }: {
     selected: selected === item.id,
   })));
   const flowEdges = edges.map((item): Edge => {
-    const stroke = item.active ? line[item.kind] : "#adb8b0";
+    const stroke = item.active ? line[item.kind] : chartTokens.rule;
     return {
       id: item.id, source: item.source, target: item.target, type: "smoothstep", selectable: false,
       ariaLabel: `${edgeLabel[item.kind]}${item.active ? "" : ", tidak aktif"}`,
@@ -67,7 +68,7 @@ export function NetworkCanvas({ nodes, edges, selected, onSelect }: {
         minZoom={0.2} maxZoom={1.8} nodesDraggable={false} nodesConnectable={false} edgesFocusable={false}
         deleteKeyCode={null} ariaLabelConfig={graphLabels} onNodesChange={changeSelection}
       >
-        <Background gap={20} size={1} color="#c9d7cb" />
+        <Background gap={20} size={1} color={chartTokens.line} />
         <Controls showInteractive={false} position="bottom-right" aria-label="Kontrol graf" />
       </ReactFlow>
     </div>

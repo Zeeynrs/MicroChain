@@ -44,7 +44,7 @@ const SLIDES: CulinarySlide[] = [
     headline: "Pemasok tepung utama gagal kirim 25 kg menjelang produksi pagi.",
     disruption: "Tepung hanya tersisa 8 kg di rak; produksi terancam turun 53% menjadi Rp 210.000.",
     mitigation: "Aktifkan 12 pak Pemasok B (premi Rp 12.000) dan prioritaskan 30 Kue kering + 68 Roti.",
-    impact: "Kontribusi bersih naik ke Rp 342.000 — memulihkan 55% kerugian gangguan.",
+    impact: "Kontribusi bersih naik ke Rp 342.000, memulihkan 55% kerugian gangguan.",
     ctaLabel: "Buka simulasi Dapur Sari",
     ctaHref: "/dashboard",
   },
@@ -255,11 +255,11 @@ export function LandingCarousel() {
                 <figcaption className="carousel-media-tag">
                   <strong>{slide.business}</strong>
                   <span>{slide.category}</span>
+                  <span className={`tag tag-${slide.badgeTone}`}>{slide.badge}</span>
                 </figcaption>
               </figure>
 
               <div className="carousel-copy">
-                <span className={`tag tag-${slide.badgeTone}`}>{slide.badge}</span>
                 <h3>{slide.headline}</h3>
 
                 <dl className="carousel-facts">
@@ -287,9 +287,9 @@ export function LandingCarousel() {
                 </dl>
 
                 <div className="carousel-slide-cta">
-                  <Button asChild size="sm" variant={slide.badgeTone === "good" ? "default" : "outline"}>
+                  <Button asChild variant="outline">
                     <Link href={slide.ctaHref} tabIndex={i === index ? 0 : -1}>
-                      {slide.ctaLabel} <ChevronRight size={15} aria-hidden="true" />
+                      {slide.ctaLabel}
                     </Link>
                   </Button>
                 </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowLeft, CheckCircle2, ChevronRight, Lock, ShieldCheck } from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -20,7 +20,44 @@ export default function LoginPage() {
     <div className="auth-page">
       <a className="skip-link" href="#isi-masuk">Lewati ke formulir masuk</a>
 
-      <div className="auth-split">
+      <header className="auth-top-bar shell">
+        <Brand />
+        <nav aria-label="Navigasi masuk" className="auth-top-nav">
+          <Link href="/" className="auth-back-link">
+            <ArrowLeft size={16} aria-hidden="true" />
+            <span>Beranda</span>
+          </Link>
+          <Button asChild variant="outline" size="sm">
+            <Link href="/dashboard">Buka ruang demo</Link>
+          </Button>
+        </nav>
+      </header>
+
+      <div className="auth-split shell">
+        <main id="isi-masuk" className="auth-main">
+          <section className="auth-form-wrap" aria-labelledby="login-title">
+            <div className="auth-intro">
+              <h1 id="login-title">Masuk ke workspace</h1>
+              <p>
+                Masuk dengan email dan kata sandi. Workspace kosong milik Anda dibuat otomatis saat pertama masuk, siap diisi dengan data usaha Anda sendiri.
+              </p>
+            </div>
+
+            <div className="auth-card">
+              <Suspense fallback={<div className="state-panel" aria-hidden="true">Memuat formulir…</div>}>
+                <LoginForm />
+              </Suspense>
+            </div>
+
+            <p className="auth-footer">
+              Hanya ingin mencoba?{" "}
+              <Link href="/dashboard" className="text-link">
+                Buka demo tanpa masuk
+              </Link>
+            </p>
+          </section>
+        </main>
+
         <aside className="auth-visual-col" aria-label="Gambaran ruang kerja MicroChain">
           <figure className="auth-visual-frame">
             <Image
@@ -29,22 +66,15 @@ export default function LoginPage() {
               fill
               unoptimized
               preload
-              sizes="(max-width: 960px) 100vw, 52vw"
+              sizes="(max-width: 960px) 100vw, 50vw"
               className="auth-visual-photo"
             />
-            <div className="auth-visual-scrim" aria-hidden="true" />
-            <div className="auth-visual-top">
-              <span className="auth-visual-pill">
-                <ShieldCheck size={14} aria-hidden="true" />
-                Ruang kerja rantai pasok UMKM
-              </span>
-            </div>
             <figcaption className="auth-visual-copy">
               <h2>Kendalikan pasokan usahamu dari satu ruang kerja.</h2>
               <ul className="auth-visual-list">
                 {highlights.map((item) => (
                   <li key={item}>
-                    <CheckCircle2 size={15} aria-hidden="true" />
+                    <CheckCircle2 size={18} aria-hidden="true" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -52,53 +82,6 @@ export default function LoginPage() {
             </figcaption>
           </figure>
         </aside>
-
-        <div className="auth-content-col">
-          <header className="auth-top-bar">
-            <Brand />
-            <nav aria-label="Navigasi masuk" className="auth-top-nav">
-              <Link href="/" className="auth-back-link">
-                <ArrowLeft size={14} aria-hidden="true" />
-                <span>Beranda</span>
-              </Link>
-              <Button asChild variant="outline" size="sm">
-                <Link href="/dashboard">
-                  Buka ruang demo <ChevronRight size={15} aria-hidden="true" />
-                </Link>
-              </Button>
-            </nav>
-          </header>
-
-          <main id="isi-masuk" className="auth-main">
-            <section className="auth-form-wrap" aria-labelledby="login-title">
-              <div className="auth-intro">
-                <span className="auth-kicker">
-                  <Lock size={13} aria-hidden="true" />
-                  Akses akun pribadi
-                </span>
-                <h1 id="login-title">Masuk ke workspace</h1>
-                <p>
-                  Masuk dengan email dan kata sandi. Workspace kosong milik Anda dibuat otomatis saat pertama masuk, siap diisi dengan data usaha Anda sendiri.
-                </p>
-              </div>
-
-              <div className="auth-card">
-                <Suspense fallback={<div className="state-panel" aria-hidden="true">Memuat formulir…</div>}>
-                  <LoginForm />
-                </Suspense>
-              </div>
-
-              <div className="auth-footer">
-                <p className="login-footer-note">
-                  Hanya ingin mencoba?{" "}
-                  <Link href="/dashboard" className="text-link">
-                    Buka demo tanpa masuk
-                  </Link>
-                </p>
-              </div>
-            </section>
-          </main>
-        </div>
       </div>
     </div>
   );

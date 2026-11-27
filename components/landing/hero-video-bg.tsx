@@ -65,7 +65,6 @@ export function HeroVideoBackground() {
         >
           <source src="/landing/hero-kitchen-bg.mp4" type="video/mp4" />
         </video>
-        <div className="hero-video-scrim" />
       </div>
 
       <button
@@ -75,7 +74,7 @@ export function HeroVideoBackground() {
         aria-pressed={paused}
         aria-label={paused ? "Putar video latar" : "Jeda video latar"}
       >
-        {paused ? <Play size={13} aria-hidden="true" /> : <Pause size={13} aria-hidden="true" />}
+        {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
         <span>{paused ? "Putar latar" : "Jeda latar"}</span>
       </button>
     </>
